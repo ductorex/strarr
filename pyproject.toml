@@ -1,0 +1,14 @@
+[project]
+name = "tablify"
+version = "0.1.0"
+description = "Render objects or dictionaries in a formatted table string."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+    "pytest-freezer>=0.4.9",
+    "pytest-regressions>=2.8.1",
+]
