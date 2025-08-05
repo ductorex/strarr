@@ -1,0 +1,99 @@
+# Tablify
+
+`tablify` is a Python library designed to convert a list of objects or dictionaries
+into a formatted table string with minimum effort.
+
+It is intended to be used to quickly print data in a tabular format,
+for better understanding or debugging purpose.
+
+## Features
+
+- **Iterables support**: Works with lists, tuples, and any other iterables.
+- **Object and Dictionary Support**: Works with both objects and dictionaries.
+  - Use attributes for objects and keys for dictionaries.
+  - Automatically infer type of data (either dict or object) based on the first element in the iterable.
+  - Assumes all elements in the iterable are of the same type.
+- **Automatic Field Detection**: Automatically detects fields from objects or dictionaries.
+- **Customizable Field Inclusion/Exclusion**: Easily include or exclude specific fields.
+- **Index Column**: Optionally add an index column to the table.
+- **Customizable output**:
+  - Add optional indentation at the start of rows.
+  - Control spaces between columns.
+
+## Installation
+
+Install the library using pip:
+
+```bash
+pip install tablify
+```
+
+## Usage
+
+Basic example:
+
+```python
+from tablify import tablify
+
+
+class Example:
+    def __init__(self, an_id, name):
+        self.id = an_id
+        self.name = name
+
+
+data = [Example(1, "Alice"), Example(2, "Bob")]
+
+print(tablify(data))
+"""Output:
+  #  [id]  [name]
+  1     1   Alice
+  2     2     Bob
+"""
+```
+
+For more examples, see the [tests](tests/test_tablify.py) or the [examples](examples/) directory
+in the GitHub repository.
+
+
+## Documentation
+
+```python
+from collections.abc import Iterable, Collection
+from typing import Any
+
+def tablify(
+    iterable: Iterable[Any],
+    /,
+    include: Collection[str] = (),
+    *,
+    exclude: Collection[str] = (),
+    index: int | None = 1,
+    indent: str = "",
+    space: int = 2,
+) -> str:
+    """
+    Convert an iterable of objects or dictionaries into a formatted table string.
+    :param iterable: Iterable of objects or dictionaries.
+    :param include: List of fields to include in the table.
+        If not specified, all fields will be included.
+        Mutually exclusive with `exclude`.
+    :param exclude: List of fields to exclude from the table.
+        Mutually exclusive with `include`.
+    :param index: If not None, adds an index column starting from this value.
+    :param indent: String to prepend to each line of the table.
+    :param space: Number of spaces to add between columns.
+    :return: Formatted string table.
+    :raises IncludeExcludeError: If both include and exclude are specified.
+    :raises NoFieldError:
+        If `include` is not specified and no fields can be determined
+        from the first element.
+    :raises NoFieldAfterExcludingError:
+        If `exclude` is specified and no fields are left after excluding.
+    """
+```
+
+## License
+
+This project is licensed under the terms of the [MIT License](LICENSE).
+```
