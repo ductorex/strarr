@@ -11,4 +11,5 @@ dev = [
     "pytest>=8.4.1",
     "pytest-freezer>=0.4.9",
     "pytest-regressions>=2.8.1",
+    "ruff>=0.12.7",
 ]

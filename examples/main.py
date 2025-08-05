@@ -5,7 +5,7 @@ def _check(output: str, expected: str):
     expected_prefix = "Output:"
     assert expected.startswith(expected_prefix)
     print(expected)
-    assert output.strip() == expected[len(expected_prefix):].strip()
+    assert output.strip() == expected[len(expected_prefix) :].strip()
 
 
 class Example:
@@ -16,60 +16,74 @@ class Example:
 
 data = [Example(1, "Alice"), Example(2, "Bob")]
 
-_check(tablify(data),
-"""Output:
+_check(
+    tablify(data),
+    """Output:
   #  [id]  [name]
   1     1   Alice
   2     2     Bob
-""")
+""",
+)
 
 # You can add an indentation
-_check(tablify(data, indent="++++++++++"),
-"""Output:
+_check(
+    tablify(data, indent="++++++++++"),
+    """Output:
 ++++++++++  #  [id]  [name]
 ++++++++++  1     1   Alice
 ++++++++++  2     2     Bob
-""")
+""",
+)
 
 # You can remove index ...
-_check(tablify(data, index=None),
-"""Output:
+_check(
+    tablify(data, index=None),
+    """Output:
   [id]  [name]
      1   Alice
      2     Bob
-""")
+""",
+)
 
 # ... Or control the index start.
-_check(tablify(data, index=0),
-"""Output:
+_check(
+    tablify(data, index=0),
+    """Output:
   #  [id]  [name]
   0     1   Alice
   1     2     Bob
-""")
+""",
+)
 
 # You can select the fields to display
-_check(tablify(data, include=["name"]),
-"""Output:
+_check(
+    tablify(data, include=["name"]),
+    """Output:
   #  [name]
   1   Alice
   2     Bob
-""")
+""",
+)
 
 # Or you can exclude fields
-_check(tablify(data, exclude=["name"]),
-"""Output:
+_check(
+    tablify(data, exclude=["name"]),
+    """Output:
   #  [id]
   1     1
   2     2
-""")
+""",
+)
 
 # You can change spaces between columns (default is 2)
-_check(tablify(data, space=0),
-"""Output:
+_check(
+    tablify(data, space=0),
+    """Output:
 #[id][name]
 1   1 Alice
 2   2   Bob
-""")
+""",
+)
 
 
 # You can use a special class attribute __props__
@@ -84,12 +98,14 @@ class ExampleWithProps:
         self.not_displayed_again = id * 100
 
 
-_check(tablify([ExampleWithProps(1, "Alice"), ExampleWithProps(2, "Bob")]),
-"""Output:
+_check(
+    tablify([ExampleWithProps(1, "Alice"), ExampleWithProps(2, "Bob")]),
+    """Output:
   #  [the_name]  [the_id]
   1       Alice         1
   2         Bob         2
-""")
+""",
+)
 
 
 # Or, you can display all fields but control display order with slots.
@@ -103,19 +119,26 @@ class ExampleWithSlots:
         self.also_displayed = id * 100
 
 
-_check(tablify([ExampleWithSlots(1, "Alice"), ExampleWithSlots(2, "Bob")]),
-"""Output:
+_check(
+    tablify([ExampleWithSlots(1, "Alice"), ExampleWithSlots(2, "Bob")]),
+    """Output:
   #  [displayed]  [also_displayed]  [the_id]  [the_name]
   1            2               100         1       Alice
   2            4               200         2         Bob
-""")
+""",
+)
 
 
 # Everything works with dictionaries too
-data_dicts = [{"my_id": 1, "my_name": "Alice", "age": 44}, {"my_id": 2, "my_name": "Bob", "age": 30}]
-_check(tablify(data_dicts, exclude=("my_id",), index=133, indent="--", space=4),
-"""Output:
+data_dicts = [
+    {"my_id": 1, "my_name": "Alice", "age": 44},
+    {"my_id": 2, "my_name": "Bob", "age": 30},
+]
+_check(
+    tablify(data_dicts, exclude=("my_id",), index=133, indent="--", space=4),
+    """Output:
 --      #    [my_name]    [age]
 --    133        Alice       44
 --    134          Bob       30
-""")
+""",
+)

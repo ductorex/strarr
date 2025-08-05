@@ -4,7 +4,12 @@ from typing import Any
 
 import pytest
 
-from tablify import tablify, IncludeExcludeError, NoFieldError, NoFieldAfterExcludingError
+from tablify import (
+    tablify,
+    IncludeExcludeError,
+    NoFieldError,
+    NoFieldAfterExcludingError,
+)
 
 
 class Exclude(Enum):
