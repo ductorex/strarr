@@ -73,21 +73,23 @@ def tablify(
     space: int = 2,
 ) -> str:
     """
-    Convert an iterable of objects or dictionaries into a formatted table string.
+    Convert an iterable of objects or dictionaries into a formatted table
+    rendered in a string.
+
     :param iterable: Iterable of objects or dictionaries.
     :param include: List of fields to include in the table.
-        If not specified, all fields will be included.
+        If not specified or empty, all fields will be included.
         Mutually exclusive with `exclude`.
     :param exclude: List of fields to exclude from the table.
         Mutually exclusive with `include`.
     :param index: If not None, adds an index column starting from this value.
-    :param indent: String to prepend to each line of the table.
-    :param space: Number of spaces to add between columns.
+    :param indent: String to prepend to each line of the table (default "").
+    :param space: Number of spaces to add between columns (default 2).
     :return: Formatted string table.
     :raises IncludeExcludeError: If both include and exclude are specified.
     :raises NoFieldError:
-        If `include` is not specified and no fields can be determined
-        from the first element.
+        If `include` is not specified and no fields
+        can be inferred from the first element.
     :raises NoFieldAfterExcludingError:
         If `exclude` is specified and no fields are left after excluding.
     """
