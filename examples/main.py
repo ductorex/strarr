@@ -14,6 +14,7 @@ class Example:
         self.name = name
 
 
+# Basic example
 data = [Example(1, "Alice"), Example(2, "Bob")]
 
 _check(
@@ -35,7 +36,7 @@ _check(
 """,
 )
 
-# You can remove index ...
+# You can remove index
 _check(
     tablify(data, index=None),
     """Output:
@@ -45,7 +46,7 @@ _check(
 """,
 )
 
-# ... Or control the index start.
+# Or control the index start (default is 1).
 _check(
     tablify(data, index=0),
     """Output:
@@ -125,6 +126,22 @@ _check(
   #  [displayed]  [also_displayed]  [the_id]  [the_name]
   1            2               100         1       Alice
   2            4               200         2         Bob
+""",
+)
+
+
+# Note that __props__ is prioritized over __slots__
+class ExampleWithSlotsAndProps(ExampleWithSlots):
+    __props__ = ("displayed", "the_name")
+    __slots__ = ()
+
+
+_check(
+    tablify([ExampleWithSlotsAndProps(1, "Alice"), ExampleWithSlotsAndProps(2, "Bob")]),
+    """Output:
+  #  [displayed]  [the_name]
+  1            2       Alice
+  2            4         Bob
 """,
 )
 
