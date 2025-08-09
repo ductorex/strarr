@@ -1,10 +1,13 @@
 [project]
 name = "strarr"
-version = "0.1.0"
-description = "Render objects or dictionaries in a formatted table string."
+version = "0.1.0.1"
+description = "Render iterable of objects or dictionaries into a formatted table string."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = []
+
+[project.urls]
+Repository = "https://github.com/ductorex/strarr"
 
 [dependency-groups]
 dev = [
