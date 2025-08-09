@@ -74,7 +74,7 @@ class DictProvider(AbstractProvider):
         return list(el.keys())
 
 
-def tablify(
+def strarr(
     iterable: Iterable[Any],
     /,
     include: Collection[str] = (),

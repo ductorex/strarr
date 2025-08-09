@@ -245,9 +245,9 @@ wheels = [
 ]
 
 [[package]]
-name = "tablify"
+name = "strarr"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 
 [package.dev-dependencies]
 dev = [

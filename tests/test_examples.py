@@ -1,6 +1,6 @@
 """Examples, as tests."""
 
-from tablify import tablify
+from strarr import strarr
 
 
 def _check(output: str, expected: str):
@@ -19,21 +19,21 @@ class Example:
 class ExampleWithProps:
     __props__ = ("the_name", "the_id")
 
-    def __init__(self, id, name):
-        self.the_id = id
+    def __init__(self, the_id, name):
+        self.the_id = the_id
         self.the_name = name
-        self.not_displayed = id * 2
-        self.not_displayed_again = id * 100
+        self.not_displayed = the_id * 2
+        self.not_displayed_again = the_id * 100
 
 
 class ExampleWithSlots:
     __slots__ = ("displayed", "also_displayed", "the_id", "the_name")
 
-    def __init__(self, id, name):
+    def __init__(self, the_id, name):
         self.the_name = name
-        self.the_id = id
-        self.displayed = id * 2
-        self.also_displayed = id * 100
+        self.the_id = the_id
+        self.displayed = the_id * 2
+        self.also_displayed = the_id * 100
 
 
 class ExampleWithSlotsAndProps(ExampleWithSlots):
@@ -46,7 +46,7 @@ def test_examples():
 
     # Basic example
     _check(
-        tablify(data),
+        strarr(data),
         """Output:
 #  [id]  [name]
 1     1   Alice
@@ -56,7 +56,7 @@ def test_examples():
 
     # You can add an indentation
     _check(
-        tablify(data, indent="++++++++++|"),
+        strarr(data, indent="++++++++++|"),
         """Output:
 ++++++++++|#  [id]  [name]
 ++++++++++|1     1   Alice
@@ -66,7 +66,7 @@ def test_examples():
 
     # You can remove index
     _check(
-        tablify(data, index=None),
+        strarr(data, index=None),
         """Output:
 [id]  [name]
    1   Alice
@@ -76,7 +76,7 @@ def test_examples():
 
     # Or control the index start (default is 1).
     _check(
-        tablify(data, index=0),
+        strarr(data, index=0),
         """Output:
 #  [id]  [name]
 0     1   Alice
@@ -86,7 +86,7 @@ def test_examples():
 
     # You can select the fields to display
     _check(
-        tablify(data, include=["name"]),
+        strarr(data, include=["name"]),
         """Output:
 #  [name]
 1   Alice
@@ -96,7 +96,7 @@ def test_examples():
 
     # Or you can exclude fields
     _check(
-        tablify(data, exclude=["name"]),
+        strarr(data, exclude=["name"]),
         """Output:
 #  [id]
 1     1
@@ -106,7 +106,7 @@ def test_examples():
 
     # You can change spaces between columns (default is 2)
     _check(
-        tablify(data, space=0),
+        strarr(data, space=0),
         """Output:
 #[id][name]
 1   1 Alice
@@ -115,7 +115,7 @@ def test_examples():
     )
 
     _check(
-        tablify(data, space=7),
+        strarr(data, space=7),
         """Output:
 #       [id]       [name]
 1          1        Alice
@@ -126,7 +126,7 @@ def test_examples():
     # You can use a special class attribute __props__
     # to control which fields to include, and order in which they are displayed.
     _check(
-        tablify([ExampleWithProps(1, "Alice"), ExampleWithProps(2, "Bob")]),
+        strarr([ExampleWithProps(1, "Alice"), ExampleWithProps(2, "Bob")]),
         """Output:
 #  [the_name]  [the_id]
 1       Alice         1
@@ -136,7 +136,7 @@ def test_examples():
 
     # Or, you can display all fields but control display order with slots.
     _check(
-        tablify([ExampleWithSlots(1, "Alice"), ExampleWithSlots(2, "Bob")]),
+        strarr([ExampleWithSlots(1, "Alice"), ExampleWithSlots(2, "Bob")]),
         """Output:
 #  [displayed]  [also_displayed]  [the_id]  [the_name]
 1            2               100         1       Alice
@@ -146,7 +146,7 @@ def test_examples():
 
     # Note that __props__ is prioritized over __slots__
     _check(
-        tablify(
+        strarr(
             [ExampleWithSlotsAndProps(1, "Alice"), ExampleWithSlotsAndProps(2, "Bob")]
         ),
         """Output:
@@ -162,7 +162,7 @@ def test_examples():
         {"my_id": 2, "my_name": "Bob", "age": 30},
     ]
     _check(
-        tablify(data_dicts, exclude=("my_id",), index=133, indent="-- ", space=4),
+        strarr(data_dicts, exclude=("my_id",), index=133, indent="-- ", space=4),
         """Output:
 --   #    [my_name]    [age]
 -- 133        Alice       44

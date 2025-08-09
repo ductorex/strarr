@@ -1,5 +1,5 @@
 [project]
-name = "tablify"
+name = "strarr"
 version = "0.1.0"
 description = "Render objects or dictionaries in a formatted table string."
 readme = "README.md"
@@ -17,6 +17,9 @@ dev = [
 
 [tool.coverage.report]
 exclude_also = [
-    # "def __repr__",
     'raise NotImplementedError',
 ]
+
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"

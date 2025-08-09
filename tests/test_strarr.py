@@ -4,8 +4,8 @@ from typing import Any
 
 import pytest
 
-from tablify import (
-    tablify,
+from strarr import (
+    strarr,
     IncludeExcludeError,
     NoFieldError,
     NoFieldAfterExcludingError,
@@ -107,7 +107,7 @@ class AbstractCase:
                 else self.__exclude_all__
             )
         elements = [self.factory(i) for i in range(15)]
-        return tablify(elements, **kwargs)
+        return strarr(elements, **kwargs)
 
     def check(self):
         return self.generate()
@@ -234,7 +234,7 @@ def test_mock_classes():
         ]
     ],
 )
-def test_tablify(case: Case, file_regression):
+def test_strarr(case: Case, file_regression):
     table_string = case.check()
     if table_string:
         file_regression.check(table_string)
@@ -248,14 +248,14 @@ def test_tablify(case: Case, file_regression):
         for case in [DictCase(), DictCase(exclude=Exclude.SOME), DictCase(fields=True)]
     ],
 )
-def test_tablify_dicts(case: Case, file_regression):
+def test_strarr_dicts(case: Case, file_regression):
     table_string = case.check()
     if table_string:
         file_regression.check(table_string)
 
 
 @pytest.mark.usefixtures("mock_time")
-def test_tablify_dicts_errors():
+def test_strarr_dicts_errors():
     with pytest.raises(NoFieldError):
         EmptyDictCase().check()
 
@@ -266,10 +266,10 @@ def test_tablify_dicts_errors():
         DictCase(fields=True, exclude=Exclude.SOME).check()
 
 
-def test_tablify_empty():
-    assert tablify([]) == ""
-    assert tablify([], include=["a", "b"]) == ""
-    assert tablify([], exclude=["a", "b"]) == ""
-    assert tablify([], index=None) == ""
-    assert tablify([], indent="  ") == ""
-    assert tablify([], space=4) == ""
+def test_strarr_empty():
+    assert strarr([]) == ""
+    assert strarr([], include=["a", "b"]) == ""
+    assert strarr([], exclude=["a", "b"]) == ""
+    assert strarr([], index=None) == ""
+    assert strarr([], indent="  ") == ""
+    assert strarr([], space=4) == ""

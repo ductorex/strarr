@@ -1,6 +1,6 @@
-# Tablify
+# strarr
 
-`tablify` is a Python library designed to convert a list of objects or dictionaries
+`strarr` is a Python library designed to convert any iterable of objects or dictionaries
 into a formatted table string with minimum effort.
 
 It is intended to be used to quickly print data in a tabular format,
@@ -11,8 +11,9 @@ for better understanding or debugging purpose.
 - **Iterables support**: Works with lists, tuples, and any other iterables.
 - **Object and Dictionary Support**: Works with both objects and dictionaries.
   - Use attributes for objects and keys for dictionaries.
-  - Automatically infer type of data (either dict or object) based on the first element in the iterable.
-  - Assumes all elements in the iterable are of the same type.
+  - Automatically infer type of data (either dict or object) 
+    based on the first element in the iterable.
+  - Assumes same type for all elements in the iterable.
 - **Automatic Field Detection**: Automatically detects fields from objects or dictionaries.
 - **Customizable Field Inclusion/Exclusion**: Easily include or exclude specific fields.
 - **Index Column**: Optionally add an index column to the table.
@@ -25,7 +26,7 @@ for better understanding or debugging purpose.
 Install the library using pip:
 
 ```bash
-pip install tablify
+pip install strarr
 ```
 
 ## Usage
@@ -33,7 +34,7 @@ pip install tablify
 Basic example:
 
 ```python
-from tablify import tablify
+from strarr import strarr
 
 
 class Example:
@@ -44,7 +45,7 @@ class Example:
 
 data = [Example(1, "Alice"), Example(2, "Bob")]
 
-print(tablify(data))
+print(strarr(data))
 """Output:
 #  [id]  [name]
 1     1   Alice
@@ -61,7 +62,7 @@ For more examples, see `tests` directory in the GitHub repository.
 from collections.abc import Iterable, Collection
 from typing import Any
 
-def tablify(
+def strarr(
     iterable: Iterable[Any],
     /,
     include: Collection[str] = (),
