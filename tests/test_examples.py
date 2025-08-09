@@ -114,6 +114,15 @@ def test_examples():
 """,
     )
 
+    _check(
+        tablify(data, space=7),
+        """Output:
+#       [id]       [name]
+1          1        Alice
+2          2          Bob
+""",
+    )
+
     # You can use a special class attribute __props__
     # to control which fields to include, and order in which they are displayed.
     _check(
