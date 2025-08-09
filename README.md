@@ -46,14 +46,13 @@ data = [Example(1, "Alice"), Example(2, "Bob")]
 
 print(tablify(data))
 """Output:
-  #  [id]  [name]
-  1     1   Alice
-  2     2     Bob
+#  [id]  [name]
+1     1   Alice
+2     2     Bob
 """
 ```
 
-For more examples, see the [tests](tests/test_tablify.py) or the [examples](examples/) directory
-in the GitHub repository.
+For more examples, see `tests` directory in the GitHub repository.
 
 
 ## Documentation

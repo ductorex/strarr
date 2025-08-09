@@ -139,12 +139,15 @@ def tablify(
 
     table = [headers] + rows
     nb_cols = len(headers)
-    col_sizes = [max([len(row[i]) for row in table]) + space for i in range(nb_cols)]
+    col_sizes = [max([len(row[i]) for row in table]) for i in range(nb_cols)]
 
     with StringIO() as output:
         for row in table:
             print(
-                indent + "".join(col.rjust(size) for size, col in zip(col_sizes, row)),
+                indent
+                + (" " * space).join(
+                    col.rjust(size) for size, col in zip(col_sizes, row)
+                ),
                 file=output,
             )
         return output.getvalue()
