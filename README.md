@@ -71,6 +71,7 @@ def strarr(
     index: int | None = 1,
     indent: str = "",
     space: int = 2,
+    align_left: bool = False,
 ) -> str:
     """
     Convert an iterable of objects or dictionaries into a formatted table
@@ -85,6 +86,8 @@ def strarr(
     :param index: If not None, adds an index column starting from this value.
     :param indent: String to prepend to each line of the table (default "").
     :param space: Number of spaces to add between columns (default 2).
+    :param align_left: If True, aligns columns to the left,
+        otherwise to the right (default False).
     :return: Formatted string table.
     :raises IncludeExcludeError: If both include and exclude are specified.
     :raises NoFieldError:

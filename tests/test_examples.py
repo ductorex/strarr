@@ -123,6 +123,16 @@ def test_examples():
 """,
     )
 
+    # You can align columns to the left
+    _check(
+        strarr(data, align_left=True),
+        """Output:
+#  [id]  [name]
+1  1     Alice 
+2  2     Bob   
+""",
+    )
+
     # You can use a special class attribute __props__
     # to control which fields to include, and order in which they are displayed.
     _check(

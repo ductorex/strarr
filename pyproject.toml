@@ -1,6 +1,6 @@
 [project]
 name = "strarr"
-version = "0.1.0.1"
+version = "0.1.1"
 description = "Render iterable of objects or dictionaries into a formatted table string."
 readme = "README.md"
 requires-python = ">=3.13"
