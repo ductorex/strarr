@@ -74,6 +74,24 @@ class DictProvider(AbstractProvider):
         return list(el.keys())
 
 
+class LineString:
+    __slots__ = ("_lines",)
+
+    def __init__(self, something: Any) -> None:
+        self._lines = str(something).splitlines()
+
+    def __getitem__(self, index: int) -> str:
+        return self._lines[index] if index < len(self._lines) else ""
+
+    @property
+    def max_length(self) -> int:
+        return max((len(line) for line in self._lines), default=0)
+
+    @property
+    def nb_lines(self) -> int:
+        return len(self._lines)
+
+
 def strarr(
     iterable: Iterable[Any],
     /,
@@ -112,7 +130,7 @@ def strarr(
         raise IncludeExcludeError()
 
     fields = include
-    rows = []
+    rows: list[list[LineString]] = []
     iterator = iter(iterable)
     try:
         el = next(iterator)
@@ -128,30 +146,33 @@ def strarr(
             raise NoFieldAfterExcludingError()
 
         while True:
-            rows.append([str(provider.get_value(el, field)) for field in fields])
+            rows.append([LineString(provider.get_value(el, field)) for field in fields])
             el = next(iterator)
     except StopIteration:
         if not rows:
             return ""
 
-    headers = [f"[{field}]" for field in fields]
+    headers: list[LineString] = [LineString(f"[{field}]") for field in fields]
 
     if index is not None:
-        headers = ["#"] + headers
-        rows = [([str(index + i)] + row) for i, row in enumerate(rows)]
+        headers = [LineString("#")] + headers
+        rows = [([LineString(index + i)] + row) for i, row in enumerate(rows)]
 
     table = [headers] + rows
     nb_cols = len(headers)
-    col_sizes = [max([len(row[i]) for row in table]) for i in range(nb_cols)]
+    col_sizes = [max([row[i].max_length for row in table]) for i in range(nb_cols)]
 
     with StringIO() as output:
         align = str.ljust if align_left else str.rjust
         for row in table:
-            print(
-                indent
-                + (" " * space).join(
-                    align(col, size) for size, col in zip(col_sizes, row)
-                ),
-                file=output,
-            )
+            nb_sub_lines = max(ls.nb_lines for ls in row)
+            for icol in range(nb_sub_lines):
+                sub_row = [ls[icol] for ls in row]
+                print(
+                    indent
+                    + (" " * space).join(
+                        align(col, size) for size, col in zip(col_sizes, sub_row)
+                    ),
+                    file=output,
+                )
         return output.getvalue()
